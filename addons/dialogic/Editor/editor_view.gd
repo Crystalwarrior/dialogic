@@ -150,6 +150,8 @@ func load_timeline(path):
 		match i:
 			{'text', 'character', 'portrait'}:
 				create_event("TextBlock", i)
+			{'comment'}:
+				create_event("CommentBlock", i)
 			{'background'}:
 				create_event("SceneBlock", i)
 			{'character', 'action', 'position'}:
