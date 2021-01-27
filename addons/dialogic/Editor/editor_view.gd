@@ -43,6 +43,8 @@ func _ready():
 		if b is Button:
 			if b.name == 'ButtonQuestion':
 				b.connect('pressed', self, "_on_ButtonQuestion_pressed", [])
+			elif b.name == 'ButtonRebuttal':
+				b.connect('pressed', self, "_on_ButtonRebuttal_pressed", [])
 			else:
 				b.connect('pressed', self, "_create_event_button_pressed", [b.name])
 
@@ -68,6 +70,13 @@ func _on_ButtonQuestion_pressed() -> void:
 	create_event("Question", {'no-data': true}, true)
 	create_event("Choice", {'no-data': true}, true)
 	create_event("Choice", {'no-data': true}, true)
+
+
+# Special event creation for multiple events clicking one button
+func _on_ButtonRebuttal_pressed() -> void:
+	create_event("Rebuttal", {'no-data': true}, true)
+	create_event("TextBlock", {'no-data': true}, true)
+	create_event("TextBlock", {'no-data': true}, true)
 	create_event("EndChoice", {'no-data': true}, true)
 
 
