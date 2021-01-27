@@ -70,6 +70,7 @@ func _on_ButtonQuestion_pressed() -> void:
 	create_event("Question", {'no-data': true}, true)
 	create_event("Choice", {'no-data': true}, true)
 	create_event("Choice", {'no-data': true}, true)
+	create_event("EndChoice", {'no-data': true}, true)
 
 
 # Special event creation for multiple events clicking one button
