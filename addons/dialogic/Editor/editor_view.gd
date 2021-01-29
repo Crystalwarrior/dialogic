@@ -43,6 +43,8 @@ func _ready():
 		if b is Button:
 			if b.name == 'ButtonQuestion':
 				b.connect('pressed', self, "_on_ButtonQuestion_pressed", [])
+			elif b.name == 'ButtonRebuttal':
+				b.connect('pressed', self, "_on_ButtonRebuttal_pressed", [])
 			else:
 				b.connect('pressed', self, "_create_event_button_pressed", [b.name])
 
@@ -77,6 +79,14 @@ func _on_ButtonQuestion_pressed() -> void:
 	create_event("Question", {'no-data': true}, true)
 	create_event("Choice", {'no-data': true}, true)
 	create_event("Choice", {'no-data': true}, true)
+	create_event("EndChoice", {'no-data': true}, true)
+
+
+# Special event creation for multiple events clicking one button
+func _on_ButtonRebuttal_pressed() -> void:
+	create_event("Rebuttal", {'no-data': true}, true)
+	create_event("TextBlock", {'no-data': true}, true)
+	create_event("TextBlock", {'no-data': true}, true)
 	create_event("EndChoice", {'no-data': true}, true)
 
 
@@ -161,6 +171,8 @@ func load_timeline(path):
 				create_event("TextBlock", i)
 			{'comment'}:
 				create_event("CommentBlock", i)
+			{'rebuttal', 'statements'}:
+				create_event("Rebuttal", i)
 			{'background'}:
 				create_event("SceneBlock", i)
 			{'character', 'action', 'position'}:
@@ -214,7 +226,7 @@ func indent_events() -> void:
 		indent_node.visible = false
 	# Adding new indents
 	for event in event_list:
-		if event.event_data.has('question') or event.event_data.has('condition'):
+		if event.event_data.has('question') or event.event_data.has('condition') or event.event_data.has('rebuttal'):
 			indent += 1
 			starter = true
 			question_index += 1
