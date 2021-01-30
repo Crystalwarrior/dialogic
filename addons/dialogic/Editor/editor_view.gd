@@ -173,6 +173,8 @@ func load_timeline(path):
 				create_event("CommentBlock", i)
 			{'rebuttal', 'statements'}:
 				create_event("Rebuttal", i)
+			{'statement', 'character', 'portrait'}:
+				create_event("Statement", i)
 			{'background'}:
 				create_event("SceneBlock", i)
 			{'character', 'action', 'position'}:
@@ -231,7 +233,7 @@ func indent_events() -> void:
 			starter = true
 			question_index += 1
 			question_indent[question_index] = indent
-		if event.event_data.has('choice'):
+		if event.event_data.has('choice') or event.event_data.has('statement'):
 			if question_index > 0:
 				indent = question_indent[question_index] + 1
 				starter = true

@@ -99,7 +99,10 @@ func parse_branches(unparsed_dialog_script: Dictionary) -> Dictionary:
 				'event_id': event_id
 				})
 		
-		if event.has('endchoice'):
+		if event.has('rebuttal'):
+			print("pog")
+		
+		if event.has('endchoice') and questions.size() > 0:
 			var c_question = questions[questions.size() - closed_question_index - 1]
 			new_events[c_question['event_id']]['question_id'] = closed_question_index
 			c_question['end_id'] = event_id
@@ -251,6 +254,22 @@ func event_handler(event: Dictionary):
 			else:
 				# It should never get here, but if it does, go to the next place.
 				go_to_next_event()
+		{'rebuttal', ..}:
+			show_dialog()
+			finished = false
+			update_text("[center][color=#FF8800]" + event['rebuttal'] + "[/color][/center]")
+			if event.has('statements'):
+				for o in event['statements']:
+					pass
+		{'statement', 'character', 'portrait'}:
+			show_dialog()
+			finished = false
+			var character_data = get_character(event['character'])
+			update_name(character_data)
+			grab_portrait_focus(character_data)
+			update_text("[color=lime]" + event['statement'] + "[/color]")
+		{'comment'}:
+			go_to_next_event()
 		{'input', ..}:
 			show_dialog()
 			finished = false
